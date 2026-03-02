@@ -20,7 +20,7 @@ proxyRouter.post("/proxy/store", async (c) => {
     
     if (urlStore.size > 100) {
       const firstKey = urlStore.keys().next().value;
-      urlStore.delete(firstKey);
+      if (firstKey) urlStore.delete(firstKey);
     }
     
     return c.json({ token });
