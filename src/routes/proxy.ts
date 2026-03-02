@@ -2,7 +2,6 @@ import { Hono } from "hono";
 
 const proxyRouter = new Hono();
 
-// Store URLs temporarily
 const urlStore = new Map<string, string>();
 
 const PROXY_HEADERS = {
@@ -11,7 +10,6 @@ const PROXY_HEADERS = {
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
 };
 
-// Store URL and get short token
 proxyRouter.post("/proxy/store", async (c) => {
   try {
     const { url } = await c.req.json();
@@ -20,7 +18,6 @@ proxyRouter.post("/proxy/store", async (c) => {
     const token = Math.random().toString(36).substring(2, 10);
     urlStore.set(token, url);
     
-    // Clean old entries (keep max 100)
     if (urlStore.size > 100) {
       const firstKey = urlStore.keys().next().value;
       urlStore.delete(firstKey);
@@ -32,7 +29,6 @@ proxyRouter.post("/proxy/store", async (c) => {
   }
 });
 
-// Play by token
 proxyRouter.get("/proxy/play/:token", async (c) => {
   try {
     const token = c.req.param("token");
