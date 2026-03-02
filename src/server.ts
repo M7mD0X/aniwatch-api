@@ -18,6 +18,7 @@ import { cacheConfigSetter, cacheControl } from "./middleware/cache.js";
 
 import pkgJson from "../package.json" with { type: "json" };
 
+import { proxyRouter } from "./routes/proxy.js";
 //
 const BASE_PATH = "/api/v2" as const;
 
@@ -62,6 +63,8 @@ app.basePath(BASE_PATH).get("/anicrush", (c) =>
 
 app.notFound(notFoundHandler);
 app.onError(errorHandler);
+
+app.route("/", proxyRouter);
 
 //
 (function () {
