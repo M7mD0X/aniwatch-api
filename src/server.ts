@@ -60,11 +60,11 @@ app.basePath(BASE_PATH).route("/hianime", hianimeRouter);
 app.basePath(BASE_PATH).get("/anicrush", (c) =>
     c.text("Anicrush could be implemented in future.")
 );
+app.route("/", proxyRouter);
 
 app.notFound(notFoundHandler);
 app.onError(errorHandler);
 
-app.route("/", proxyRouter);
 
 //
 (function () {
